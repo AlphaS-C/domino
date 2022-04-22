@@ -12,6 +12,14 @@ public class Ficha {
 		this.lado2 = lado2;
 	}
 	
+	public Parte getLado1() {
+		return lado1;
+	}
+
+	public Parte getLado2() {
+		return lado2;
+	}
+
 	public String toString() {
 		
 		return "" + this.lado1.getUnicode() + this.lado2.getUnicode();
