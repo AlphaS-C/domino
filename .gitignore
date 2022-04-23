@@ -23,6 +23,6 @@
 hs_err_pid*
 
 # archivos generados por IDE Eclipse
-.classpath
-.proyect
+*.classpath
+*.proyect
 
