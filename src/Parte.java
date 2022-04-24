@@ -1,3 +1,7 @@
+package model;
+
+
+
 
 public class Parte {
 
@@ -43,3 +47,4 @@ public class Parte {
 	
 	
 }
+
