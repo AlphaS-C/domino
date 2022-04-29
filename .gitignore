@@ -24,7 +24,7 @@ hs_err_pid*
 
 # archivos y carpetas generados por IDE Eclipse
 *.classpath
-*.proyect
+*.project
 /bin/
 
 # archivos y carpetas generadas por IDE Intellij Idea
