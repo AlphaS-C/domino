@@ -22,8 +22,12 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# archivos generados por IDE Eclipse
+# archivos y carpetas generados por IDE Eclipse
 *.classpath
 *.proyect
-
 /bin/
+
+# archivos y carpetas generadas por IDE Intellij Idea
+
+*.iml
+/out/
