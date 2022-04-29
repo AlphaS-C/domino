@@ -30,5 +30,6 @@ hs_err_pid*
 # archivos y carpetas generadas por IDE Intellij Idea
 
 *.iml
+*.eml
 /out/
 /.idea/
