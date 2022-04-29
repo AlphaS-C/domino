@@ -31,6 +31,6 @@ hs_err_pid*
 
 *.iml
 *.eml
-*.DS_STORE
+*.DS_Store
 /out/
 /.idea/
