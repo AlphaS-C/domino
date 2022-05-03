@@ -1,4 +1,4 @@
-package aplicacion;
+package Aplicacion;
 
 
 
@@ -11,12 +11,8 @@ public class main {
 	public static void main(String[] args) {
 		Mesa juego = new Mesa();
 		Jugador jugador1 = new Jugador(juego);
-		Jugador jugador2 = new Jugador(juego);
-		Random aleatorio = new Random();
-		int num;
-		Ficha fichaAPoner;
-		boolean bandera;
-		boolean noCome = false;
+		Maquina jugador2 = new Maquina(juego);
+		int bandera =0 ; int indice;
 		Scanner entrada = new Scanner(System.in);
 		System.out.println(jugador1.getNumJugador());
 		System.out.println(jugador2.getNumJugador());
@@ -65,68 +61,104 @@ public class main {
 		}
 		
 
-		while( jugador1.fichas.size()*jugador2.fichas.size() > 0) {
+		while( jugador1.fichas.size()*jugador2.fichas.size() > 0 && bandera < 2 ) {
 
 			if(turno == 2)
 			{
 				
-				jugador2.comerVarias();
-				for(int i=0;i<jugador2.fichas.size();i++)
+				if(jugador2.puedePoner()) {
+					indice = jugador2.sacarMasOptima();
+					
+					System.out.println("\nel jugador 2 pone "+jugador2.fichas.get(indice).imprimirFicha());
+					jugador2.ponerFicha(indice, jugador2.posicionesPosibles(indice).charAt(0));
+					turno = 1;
+					juego.imprimirMesa();
+					bandera =0;
+//					for(int i=0;i<jugador2.fichas.size();i++)
+//					{
+//
+//						String posicionesVal = jugador2.posicionesPosibles(i);
+//						if(posicionesVal.length()>0) {
+//							System.out.println("\nel jugador 2 pone "+jugador2.fichas.get(i).imprimirFicha());
+//							jugador2.ponerFicha(i, posicionesVal.charAt(0));
+//							turno = 1;
+//							juego.imprimirMesa();
+//							bandera =0;
+//							break;
+//						}
+//
+//
+//					}
+			}
+				else
 				{
-					
-					String posicionesVal = jugador2.posicionesPosibles(i);
-					if(posicionesVal.length()>0) {
-						System.out.println("\nel jugador 2 pone "+jugador2.fichas.get(i).imprimirFicha());
-						jugador2.ponerFicha(i, posicionesVal.charAt(0));
-						turno = 1;
-						juego.imprimirMesa();
-						break;
-					}
-					
-					
+					bandera+=1;
+					System.out.println("\nno puede poner ficha jugador 2");
+					turno = 1;
 				}
-				
+			
+				turno = 1;
 			}
 			
 			else if(turno==1)
 			{
-				jugador1.comerVarias();
-				
+				if(jugador1.puedePoner()) {
 
-				
-				int ind = entrada.nextInt();
-				String  posicionesVal = jugador1.posicionesPosibles(ind);
-				
-				
-				if(posicionesVal.length() >0)
-				{
-					turno =2;
-					String lado = posicionesVal;
-					if(posicionesVal.length() == 2)
+					int ind = entrada.nextInt();
+					String  posicionesVal = jugador1.posicionesPosibles(ind);
+
+
+					if(posicionesVal.length() >0)
 					{
-						System.out.println("En que lado desea poner la ficha(i/d)");
-						lado = entrada.next();
-					}
-					jugador1.ponerFicha(ind, lado.charAt(0));
+						turno =2;
+						String lado = posicionesVal;
+						if(posicionesVal.length() > 1)
+						{
+							System.out.println("En que lado desea poner la ficha(i/d)");
+							lado = entrada.next();
+						}
+						jugador1.ponerFicha(ind, lado.charAt(0));
 
-					jugador1.imprimirFichas();
-					juego.imprimirMesa();
-					
+						jugador1.imprimirFichas();
+						juego.imprimirMesa();
+						bandera=0;
+
+					}
+					else {
+						System.out.println("Movimiento no valido, intente de nuevo");
+					}
 				}
-				else {
-					System.out.println("Movimiento no valido, intente de nuevo");
+				else 
+				{
+					bandera+=1;
+					System.out.println("\nno puede poner ficha jugador 1");
+					turno = 2;
 				}
 			}
 			
 		}
 		
-		if(jugador1.fichas.size() == 0)
+		System.out.println("\npuntaje jugador 1: "+jugador1.calcularPuntaje());
+		System.out.println("\npuntaje jugador 2: "+jugador2.calcularPuntaje());
+		
+		if(jugador1.calcularPuntaje() < jugador2.calcularPuntaje())
 		{
 			System.out.println("\ngana el jugador 1");
 		}
-		else
+		else if (jugador1.calcularPuntaje() > jugador2.calcularPuntaje())
 		{
 			System.out.println("\ngana el jugador 2");
+		}
+		else
+		{
+			if(turno == 1)
+			{
+				System.out.println("\ngana el jugador 2");
+			}
+			else if (turno == 2)
+			{
+				System.out.println("\ngana el jugador 1");
+			}
 		}
 		
 		System.out.println("final del juego");
