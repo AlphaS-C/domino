@@ -1,12 +1,10 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Jugador {
 	
 	public ArrayList<Ficha> fichas;
-	private Scanner entrada;
 	private int numeroJugador;
 	private static int cantJugadores = 1;
 	Mesa juego;
@@ -18,6 +16,19 @@ public class Jugador {
 		cantJugadores++;
 	}
 		
+	
+	public boolean puedePoner()
+	{
+		for(int i=0; i<fichas.size(); i++) {
+			if(this.posicionesPosibles(i).length()>0)
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	
 	public String posicionesPosibles(int i)
 	{
@@ -65,47 +76,21 @@ public class Jugador {
 	
 	
 	
-	public void comerFicha() {
-			this.fichas.add(juego.baraja.get(0));
-			juego.baraja.remove(0);
-	}
+	
 	
 
-	public boolean puedePoner()
-	{
-		for(int i=0; i<fichas.size(); i++) {
-			if(this.posicionesPosibles(i).length()>0)
-			{
-				return true;
-			}
-		}
-		
-		return false;
-	}
 	
-	public void comerVarias()
+	
+	
+	public int calcularPuntaje()
 	{
-		int comidas = 0;
-		while(juego.baraja.size()>0) {
-			if(!puedePoner())
-			{
-				this.comerFicha();
-				comidas++;
-			}
-			else {
-				break;
-			}
-		}
-		if(comidas>0)
+		int puntaje=0;
+		for(int i=0; i<fichas.size(); i++)
 		{
-			System.out.println("\nel jugador "+numeroJugador+" come "+comidas+" fichas");
-			if(numeroJugador == 1)
-			{
-				imprimirFichas();
-				juego.imprimirMesa();
-			}
+			puntaje+=fichas.get(i).ptosAbajo+fichas.get(i).ptosArriba;
 		}
 		
+		return puntaje;
 	}
 	
 	public void imprimirFichas()
@@ -117,6 +102,7 @@ public class Jugador {
 		}
 		System.out.println();
 	}
+	
 	
 	public int getNumJugador()
 	{

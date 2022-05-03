@@ -65,11 +65,7 @@ public class Mesa {
 		}
 	}
 	
-//	public void actualizarExtremos() {
-//		this.cola = mesa.get(0).ptosAbajo;
-//		this.cola = mesa.get(mesa.size()-1).ptosArriba;
-//	}
-//	
+
 	public void imprimirMesa()
 	{
 		System.out.print("Mesa: ");
