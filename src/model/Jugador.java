@@ -39,10 +39,10 @@ public class Jugador {
 		}
 		
 		Ficha fichaAPoner = this.fichas.get(i);
-		if(fichaAPoner.ptosAbajo == juego.cola || fichaAPoner.ptosArriba == juego.cola) {
+		if(fichaAPoner.getPtosAbajo() == juego.getCola() || fichaAPoner.getPtosArriba() == juego.getCola()) {
 			posiciones+="i";
 		}
-		else if(fichaAPoner.ptosAbajo == juego.cabeza || fichaAPoner.ptosArriba == juego.cabeza) {
+		else if(fichaAPoner.getPtosAbajo() == juego.getCabeza() || fichaAPoner.getPtosArriba() == juego.getCabeza()) {
 			posiciones+="d";
 		}
 		
@@ -60,13 +60,13 @@ public class Jugador {
 	{
 		Ficha fichaAPoner = this.fichas.get(i);
 		if(lado == 'i') {
-			juego.mesa.add(0, new Ficha(fichaAPoner.ptosAbajo+fichaAPoner.ptosArriba-juego.cola, juego.cola));
-			juego.cola = fichaAPoner.ptosAbajo+fichaAPoner.ptosArriba-juego.cola;
+			juego.getMesa().add(0, new Ficha(fichaAPoner.getPtosAbajo()+fichaAPoner.getPtosArriba()-juego.getCola(), juego.getCola()));
+			juego.setCola(fichaAPoner.getPtosAbajo()+fichaAPoner.getPtosArriba()-juego.getCola());
 		}
 		
 		else if(lado == 'd') {
-			juego.mesa.add(new Ficha(juego.cabeza, fichaAPoner.ptosAbajo+fichaAPoner.ptosArriba-juego.cabeza));
-			juego.cabeza = fichaAPoner.ptosAbajo+fichaAPoner.ptosArriba-juego.cabeza;
+			juego.getMesa().add(new Ficha(juego.getCabeza(), fichaAPoner.getPtosAbajo()+fichaAPoner.getPtosArriba()-juego.getCabeza()));
+			juego.setCabeza(fichaAPoner.getPtosAbajo()+fichaAPoner.getPtosArriba()-juego.getCabeza());
 		}
 		
 		this.fichas.remove(i);
@@ -87,7 +87,7 @@ public class Jugador {
 		int puntaje=0;
 		for(int i=0; i<fichas.size(); i++)
 		{
-			puntaje+=fichas.get(i).ptosAbajo+fichas.get(i).ptosArriba;
+			puntaje+=fichas.get(i).getPtosAbajo()+fichas.get(i).getPtosArriba();
 		}
 		
 		return puntaje;

@@ -1,7 +1,8 @@
-package vista;
-
+package controller;
 import model.Ficha;
 import model.Jugador;
+import model.Mesa;
+
 
 public class ControladorMesa {
 	
@@ -10,7 +11,7 @@ public class ControladorMesa {
 		
 	}
 	
-	public void colocarFicha(Ficha ficha)
+	public void colocarFicha(Mesa mesa)
 	{
 		
 	}

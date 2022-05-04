@@ -4,8 +4,8 @@ public class Ficha {
 	
 	//Los puntos que tiene el dominó en cada lado
 	//cambiar todo a private luego
-	public int ptosArriba;
-	public int ptosAbajo;
+	private int ptosArriba;
+	private int ptosAbajo;
 	
 	public Ficha(int ptosArriba, int ptosAbajo) {
 		this.ptosAbajo = ptosAbajo;

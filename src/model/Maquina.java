@@ -3,9 +3,9 @@ package model;
 import java.util.ArrayList;
 
 public class Maquina extends Jugador{
-	ArrayList<Integer> fichasJugables;
-	ArrayList<Integer> puntajes;
-	Ficha ficha;
+	private ArrayList<Integer> fichasJugables;
+	private ArrayList<Integer> puntajes;
+	private Ficha ficha;
 	
 	public Maquina(Mesa juego)
 	{
@@ -30,7 +30,7 @@ public class Maquina extends Jugador{
 		int repetidas = 0;
 		for(int i=0; i<fichas.size(); i++)
 		{
-			if(fichas.get(i).ptosArriba == valor || fichas.get(i).ptosAbajo == valor)
+			if(fichas.get(i).getPtosArriba() == valor || fichas.get(i).getPtosAbajo() == valor)
 			{
 				repetidas+=1;
 			}
@@ -42,22 +42,22 @@ public class Maquina extends Jugador{
 	public int calcularPuntaje(Ficha ficha)
 	{
 		int puntaje = 0; 
-		if(ficha.ptosAbajo == ficha.ptosArriba)
+		if(ficha.getPtosAbajo() == ficha.getPtosArriba())
 		{
 			puntaje+=1;
 		}
 		
-		if(ficha.ptosAbajo+ficha.ptosArriba > 6)
+		if(ficha.getPtosAbajo()+ficha.getPtosArriba() > 6)
 		{
 			puntaje+=1;
 		}
 		
-		if (calcularRepetidas(ficha.ptosAbajo) == 1)
+		if (calcularRepetidas(ficha.getPtosAbajo()) == 1)
 		{
 			puntaje-=2;
 		}
 		
-		if(calcularRepetidas(ficha.ptosArriba) == 1) 
+		if(calcularRepetidas(ficha.getPtosArriba()) == 1) 
 		{
 			puntaje-=2;
 		}

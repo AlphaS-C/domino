@@ -1,4 +1,4 @@
-package Aplicacion;
+package aplicacion;
 
 
 
@@ -26,7 +26,7 @@ public class main {
 		
 		if(indiceMayorD == 1000)
 		{
-			juego.mesa.add(jugador1.fichas.get(0));
+			juego.getMesa().add(jugador1.fichas.get(0));
 			System.out.println("Ninguno tiene doble");
 			System.out.println("El jugador 1 empieza");
 			jugador1.fichas.remove(0);
@@ -35,9 +35,9 @@ public class main {
 		else {
 			if(indiceMayorD>=0)
 			{
-				juego.mesa.add(jugador1.fichas.get(indiceMayorD));
-				juego.cola = jugador1.fichas.get(indiceMayorD).ptosAbajo;
-				juego.cabeza = jugador1.fichas.get(indiceMayorD).ptosArriba;
+				juego.getMesa().add(jugador1.fichas.get(indiceMayorD));
+				juego.setCola(jugador1.fichas.get(indiceMayorD).getPtosAbajo());
+				juego.setCabeza(jugador1.fichas.get(indiceMayorD).getPtosArriba());
 				System.out.println("El jugador 1 empieza");
 				System.out.println(jugador1.fichas.get(indiceMayorD).imprimirFicha());
 				jugador1.fichas.remove(indiceMayorD);
@@ -48,9 +48,9 @@ public class main {
 			}
 			else 
 			{
-				juego.mesa.add(jugador2.fichas.get(-indiceMayorD-1));
-				juego.cola = jugador2.fichas.get(-indiceMayorD-1).ptosAbajo;
-				juego.cabeza = jugador2.fichas.get(-indiceMayorD-1).ptosArriba;
+				juego.getMesa().add(jugador2.fichas.get(-indiceMayorD-1));
+				juego.setCola(jugador2.fichas.get(-indiceMayorD-1).getPtosAbajo());
+				juego.setCabeza(jugador2.fichas.get(-indiceMayorD-1).getPtosArriba());
 				System.out.println("El jugador 2 empieza");
 				System.out.println(jugador2.fichas.get(-indiceMayorD-1).imprimirFicha());
 				jugador2.fichas.remove(-indiceMayorD-1);
