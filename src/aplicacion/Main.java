@@ -1,18 +1,93 @@
 package aplicacion;
 
-
+import controller.*;
 
 import model.*;
-import java.util.Random;
-import java.util.Scanner; 
 
-public class main {
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.stage.Stage; 
 
+public class Main extends Application {
+
+	@Override
+	public void start(Stage stage) {
+		Scene scene;
+		Mesa mesa = new Mesa();
+		ControladorMesa controller = new ControladorMesa();
+		MainView mainView = new MainView();
+
+		scene = new Scene(mainView,800,800);
+		stage.setScene(scene);
+		stage.show();
+
+		inicializar(mesa, controller, mainView);
+		mainView.drawText("Para jugar pulsa la tecla numerica que corresponda",0, 1);
+		mainView.drawText("con la ficha que quieres ubicar en el tablero",0, 2);
+		
+		scene.setOnKeyPressed(e -> {
+			
+			int ind;
+		    if (e.getCode().isDigitKey()) {
+		    	
+		    	if (controller.getTurno() == 2) {
+			    	controller.turno2(mesa, 0); 
+					drawScreen(mesa, controller, mainView);
+
+		    	}
+		    	
+		    	else if (e.getCode().isDigitKey()) {
+		    		ind = Integer.parseInt(e.getCode().getName().replaceAll("[^0-9]", "")) - 1; // trukosky pa tomar el valor del teclado numerico como int
+			    	controller.turno2(mesa, ind); 
+					drawScreen(mesa, controller, mainView);
+					
+					new java.util.Timer().schedule( 
+					        new java.util.TimerTask() {
+					            @Override
+					            public void run() {
+							    	controller.turno2(mesa, 0); 
+									drawScreen(mesa, controller, mainView);
+					            }
+					        }, 
+					        1000 
+					);
+					
+					
+		    		
+		    	}
+		    	
+			    
+		    }
+		});
+		
+	}
+	
+		public void drawScreen (Mesa mesa, ControladorMesa controller, MainView mainView) {
+			mainView.drawHand(controller.getJugador());
+			mainView.drawText("Turno del jugador " + controller.getTurno(), 0, 3);
+			mainView.drawTable(mesa);
+		}
+	
+	
+		public void inicializar(Mesa mesa, ControladorMesa controller, MainView mainView) {
+			
+			controller.inicializar(mesa);
+			drawScreen(mesa, controller, mainView);
+		}
+	
+	
 	public static void main(String[] args) {
+		launch(args);
+	}
+	/*
+	public static void main(String[] args) { }
+		
 		Mesa juego = new Mesa();
 		Jugador jugador1 = new Jugador(juego);
 		Maquina jugador2 = new Maquina(juego);
-		int bandera =0 ; int indice;
+		int bandera = 0; 
+		int indice;
 		Scanner entrada = new Scanner(System.in);
 		System.out.println(jugador1.getNumJugador());
 		System.out.println(jugador2.getNumJugador());
@@ -163,6 +238,7 @@ public class main {
 		
 		System.out.println("final del juego");
 		
-	}
+	*/
+
 
 }

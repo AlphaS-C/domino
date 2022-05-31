@@ -79,6 +79,10 @@ public class Mesa{
 	public ArrayList<Ficha> getMesa() {
 		return mesa;
 	}
+	
+	public ArrayList<Ficha> getBaraja() {
+		return baraja;
+	}
 
 	public void setMesa(ArrayList<Ficha> mesa) {
 		this.mesa = mesa;

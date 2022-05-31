@@ -18,7 +18,7 @@ public class Jugador {
 		
 	
 	public boolean puedePoner()
-	{
+	{	
 		for(int i=0; i<fichas.size(); i++) {
 			if(this.posicionesPosibles(i).length()>0)
 			{
@@ -79,7 +79,9 @@ public class Jugador {
 	
 	
 
-	
+	public ArrayList<Ficha> getFichas() {
+		return fichas;
+	}
 	
 	
 	public int calcularPuntaje()
