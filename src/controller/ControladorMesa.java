@@ -233,6 +233,38 @@ public class ControladorMesa {
 		
 	}
 	
+	public void validarFinJuego(int bandera) {
+		
+		if (bandera > 2) {
+			System.out.println("\npuntaje jugador 1: "+jugador1.calcularPuntaje());
+			System.out.println("\npuntaje jugador 2: "+jugador2.calcularPuntaje());
+			
+			if(jugador1.calcularPuntaje() < jugador2.calcularPuntaje())
+			{
+				System.out.println("\ngana el jugador 1");
+			}
+			else if (jugador1.calcularPuntaje() > jugador2.calcularPuntaje())
+			{
+				System.out.println("\ngana el jugador 2");
+			}
+			else
+			{
+				if(turno == 1)
+				{
+					System.out.println("\ngana el jugador 2");
+				}
+				else if (turno == 2)
+				{
+					System.out.println("\ngana el jugador 1");
+				}
+			}
+			
+			System.out.println("final del juego");
+		}
+		
+		
+	}
+	
 	
 	
 	public void colocarFicha(Mesa mesa)

@@ -49,6 +49,7 @@ public class Main extends Application {
 							    	controller.turno2(mesa, 0); 
 									drawScreen(mesa, controller, mainView);
 					            }
+					
 					        }, 
 					        1000 
 					);
