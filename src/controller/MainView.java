@@ -15,8 +15,8 @@ public class MainView extends VBox {
 	private Image image;
 	private Affine affine;
 	private GraphicsContext g;
-	private int canvasX = 1600;
-	private int canvasY = 800;
+	private int canvasX = 1200;
+	private int canvasY = 600;
 
 	private int razonX = canvasX / 28; // dimension divido el total fichas nos da una version analoga del affine
 	private int razonY = canvasY / 28;
@@ -37,13 +37,13 @@ public class MainView extends VBox {
 
 		g.setFill(Color.WHITE);
 		g.fillRect(0, 0, razonX, razonY);
-
-		g.setFill(Color.RED); // color rojo para el texto
-
+		
+		Font font = Font.loadFont( getClass().getResourceAsStream("/assets/FreePixel.ttf") , 1); // creamos un objeto texto de tamaño '1' (1 respecto al valor del affine)
+		g.setFont(font);
 		for (int i = 0; i < jugador1.getFichas().size(); i++) {
 
 			// parte de arriba
-			g.setFont(new Font("Verdana", 1)); // creamos un objeto texto de tamaño '1' (1 respecto al valor del affine)
+
 			drawText("" + (i + 1), calcularMitad(jugador1.getFichas().size()) + i + 0.2, razonY - 2.5);
 
 			drawFicha(jugador1.getFichas().get(i).getPtosArriba(), calcularMitad(jugador1.getFichas().size()) + i,
@@ -77,7 +77,7 @@ public class MainView extends VBox {
 	}
 
 	public void drawText(String text, double x, double y) {
-		g.setFill(Color.GRAY);
+		g.setFill(Color.DARKRED);
 		g.fillText(text, x, y);
 	}
 

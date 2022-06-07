@@ -20,7 +20,7 @@ public class Main extends Application {
 
 		MainView mainView = new MainView();
 
-		scene = new Scene(mainView, 1600, 800); // tamaño de la ventana
+		scene = new Scene(mainView, 1200, 600); // tamaño de la ventana
 		stage.setScene(scene);
 		stage.show();
 
@@ -30,7 +30,7 @@ public class Main extends Application {
 
 		scene.setOnKeyPressed(e -> {
 			if (controller.getBandera() >= 2) {
-				mainView.limpiarTablero(0, 0, 28, 5); // limpio la parte superior del tablero
+				mainView.limpiarTablero(0, 0, 56, 5); // limpio la parte superior del tablero
 				mainView.drawText("FIN DEL JUEGO", 0, 1);
 				mainView.drawText("PRESIONE ENTER PARA JUGAR DE NUEVO", 0, 2);
 				mainView.drawText("Puntaje del jugador 1 = " + controller.getJugador().calcularPuntaje(), 0, 3);
