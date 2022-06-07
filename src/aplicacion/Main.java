@@ -7,239 +7,95 @@ import model.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Stage; 
+import javafx.stage.Stage;
 
 public class Main extends Application {
+
+	private Mesa mesa = new Mesa();
+	private ControladorMesa controller = new ControladorMesa();
 
 	@Override
 	public void start(Stage stage) {
 		Scene scene;
-		Mesa mesa = new Mesa();
-		ControladorMesa controller = new ControladorMesa();
+
 		MainView mainView = new MainView();
 
-		scene = new Scene(mainView,800,800);
+		scene = new Scene(mainView, 1600, 800); // tamaño de la ventana
 		stage.setScene(scene);
 		stage.show();
 
 		inicializar(mesa, controller, mainView);
-		mainView.drawText("Para jugar pulsa la tecla numerica que corresponda",0, 1);
-		mainView.drawText("con la ficha que quieres ubicar en el tablero",0, 2);
-		
+		mainView.drawText("Para jugar pulsa la tecla numerica que corresponda", 0, 1);
+		mainView.drawText("con la ficha que quieres ubicar en el tablero", 0, 2);
+
 		scene.setOnKeyPressed(e -> {
-			
+			if (controller.getBandera() >= 2) {
+				mainView.limpiarTablero(0, 0, 28, 5); // limpio la parte superior del tablero
+				mainView.drawText("FIN DEL JUEGO", 0, 1);
+				mainView.drawText("PRESIONE ENTER PARA JUGAR DE NUEVO", 0, 2);
+				mainView.drawText("Puntaje del jugador 1 = " + controller.getJugador().calcularPuntaje(), 0, 3);
+				mainView.drawText("Puntaje del jugador 2 = " + controller.getMaquina().calcularPuntaje(), 0, 4);
+				mainView.drawText(controller.returnGanador() + "!", 0, 5);
+
+				if (e.getCode() == KeyCode.ENTER) { // para reiniciar el juego
+					mesa = new Mesa();
+					controller = new ControladorMesa();
+					inicializar(mesa, controller, mainView);
+					controller.setBandera(0);
+				}
+			}
+
 			int ind;
-		    if (e.getCode().isDigitKey()) {
-		    	
-		    	if (controller.getTurno() == 2) {
-			    	controller.turno2(mesa, 0); 
+			if (e.getCode().isDigitKey()) {
+
+				if (controller.getTurno() == 2 && controller.getBandera() < 2) { // juega el primer turno  
+					controller.turno(mesa, 0);
 					drawScreen(mesa, controller, mainView);
 
-		    	}
-		    	
-		    	else if (e.getCode().isDigitKey()) {
-		    		ind = Integer.parseInt(e.getCode().getName().replaceAll("[^0-9]", "")) - 1; // trukosky pa tomar el valor del teclado numerico como int
-			    	controller.turno2(mesa, ind); 
+				}
+
+				else if (e.getCode().isDigitKey() && controller.getBandera() < 2) {
+					ind = Integer.parseInt(e.getCode().getName().replaceAll("[^0-9]", "")) - 1; // trukosky pa tomar el
+																								// valor del teclado
+																								// numerico como int
+					controller.turno(mesa, ind);
 					drawScreen(mesa, controller, mainView);
-					
-					new java.util.Timer().schedule( 
-					        new java.util.TimerTask() {
-					            @Override
-					            public void run() {
-							    	controller.turno2(mesa, 0); 
-									drawScreen(mesa, controller, mainView);
-					            }
-					
-					        }, 
-					        1000 
-					);
-					
-					
-		    		
-		    	}
-		    	
-			    
-		    }
+					new java.util.Timer().schedule(new java.util.TimerTask() {  // delay para el turno de la maquina
+						@Override
+						public void run() {
+							controller.turno(mesa, 0);
+							drawScreen(mesa, controller, mainView);
+						}
+
+					}, 1500);
+				}
+
+			}
 		});
-		
+
 	}
-	
-		public void drawScreen (Mesa mesa, ControladorMesa controller, MainView mainView) {
-			mainView.drawHand(controller.getJugador());
-			mainView.drawText("Turno del jugador " + controller.getTurno(), 0, 3);
-			mainView.drawTable(mesa);
+
+	public void drawScreen(Mesa mesa, ControladorMesa controller, MainView mainView) {
+		mainView.drawHand(controller.getJugador());
+		mainView.drawText("Turno del jugador " + controller.getTurno(), 0, 3);
+		mainView.drawTable(mesa);
+
+	}
+
+	public void drawEnd(Mesa mesa, ControladorMesa controller, MainView mainView) {
+		System.out.println("flag: " + controller.getBandera());
+		if (controller.getBandera() >= 2) {
+			mainView.drawText("FIN DEL JUEGO", 0, 1);
 		}
-	
-	
-		public void inicializar(Mesa mesa, ControladorMesa controller, MainView mainView) {
-			
-			controller.inicializar(mesa);
-			drawScreen(mesa, controller, mainView);
-		}
-	
-	
+	}
+
+	public void inicializar(Mesa mesa, ControladorMesa controller, MainView mainView) {
+		controller.inicializar(mesa);
+		drawScreen(mesa, controller, mainView);
+	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	/*
-	public static void main(String[] args) { }
-		
-		Mesa juego = new Mesa();
-		Jugador jugador1 = new Jugador(juego);
-		Maquina jugador2 = new Maquina(juego);
-		int bandera = 0; 
-		int indice;
-		Scanner entrada = new Scanner(System.in);
-		System.out.println(jugador1.getNumJugador());
-		System.out.println(jugador2.getNumJugador());
-		juego.repartir(jugador1);
-		juego.repartir(jugador2);
-		jugador1.imprimirFichas();
-		int turno = 2;
-		
-		
-		int indiceMayorD = juego.hallarMayorDoble(jugador1, jugador2);
-		
-		if(indiceMayorD == 1000)
-		{
-			juego.getMesa().add(jugador1.fichas.get(0));
-			System.out.println("Ninguno tiene doble");
-			System.out.println("El jugador 1 empieza");
-			jugador1.fichas.remove(0);
-			
-		}
-		else {
-			if(indiceMayorD>=0)
-			{
-				juego.getMesa().add(jugador1.fichas.get(indiceMayorD));
-				juego.setCola(jugador1.fichas.get(indiceMayorD).getPtosAbajo());
-				juego.setCabeza(jugador1.fichas.get(indiceMayorD).getPtosArriba());
-				System.out.println("El jugador 1 empieza");
-				System.out.println(jugador1.fichas.get(indiceMayorD).imprimirFicha());
-				jugador1.fichas.remove(indiceMayorD);
-				jugador1.imprimirFichas();
-				
-				
-
-			}
-			else 
-			{
-				juego.getMesa().add(jugador2.fichas.get(-indiceMayorD-1));
-				juego.setCola(jugador2.fichas.get(-indiceMayorD-1).getPtosAbajo());
-				juego.setCabeza(jugador2.fichas.get(-indiceMayorD-1).getPtosArriba());
-				System.out.println("El jugador 2 empieza");
-				System.out.println(jugador2.fichas.get(-indiceMayorD-1).imprimirFicha());
-				jugador2.fichas.remove(-indiceMayorD-1);
-				turno=1;
-				
-				
-			}
-		}
-		
-
-		while( jugador1.fichas.size()*jugador2.fichas.size() > 0 && bandera < 2 ) {
-
-			if(turno == 2)
-			{
-				
-				if(jugador2.puedePoner()) {
-					indice = jugador2.sacarMasOptima();
-					
-					System.out.println("\nel jugador 2 pone "+jugador2.fichas.get(indice).imprimirFicha());
-					jugador2.ponerFicha(indice, jugador2.posicionesPosibles(indice).charAt(0));
-					turno = 1;
-					juego.imprimirMesa();
-					bandera =0;
-//					for(int i=0;i<jugador2.fichas.size();i++)
-//					{
-//
-//						String posicionesVal = jugador2.posicionesPosibles(i);
-//						if(posicionesVal.length()>0) {
-//							System.out.println("\nel jugador 2 pone "+jugador2.fichas.get(i).imprimirFicha());
-//							jugador2.ponerFicha(i, posicionesVal.charAt(0));
-//							turno = 1;
-//							juego.imprimirMesa();
-//							bandera =0;
-//							break;
-//						}
-//
-//
-//					}
-			}
-				else
-				{
-					bandera+=1;
-					System.out.println("\nno puede poner ficha jugador 2");
-					turno = 1;
-				}
-			
-				turno = 1;
-			}
-			
-			else if(turno==1)
-			{
-				if(jugador1.puedePoner()) {
-
-					int ind = entrada.nextInt();
-					String  posicionesVal = jugador1.posicionesPosibles(ind);
-
-
-					if(posicionesVal.length() >0)
-					{
-						turno =2;
-						String lado = posicionesVal;
-						if(posicionesVal.length() > 1)
-						{
-							System.out.println("En que lado desea poner la ficha(i/d)");
-							lado = entrada.next();
-						}
-						jugador1.ponerFicha(ind, lado.charAt(0));
-
-						jugador1.imprimirFichas();
-						juego.imprimirMesa();
-						bandera=0;
-
-					}
-					else {
-						System.out.println("Movimiento no valido, intente de nuevo");
-					}
-				}
-				else 
-				{
-					bandera+=1;
-					System.out.println("\nno puede poner ficha jugador 1");
-					turno = 2;
-				}
-			}
-			
-		}
-		
-		System.out.println("\npuntaje jugador 1: "+jugador1.calcularPuntaje());
-		System.out.println("\npuntaje jugador 2: "+jugador2.calcularPuntaje());
-		
-		if(jugador1.calcularPuntaje() < jugador2.calcularPuntaje())
-		{
-			System.out.println("\ngana el jugador 1");
-		}
-		else if (jugador1.calcularPuntaje() > jugador2.calcularPuntaje())
-		{
-			System.out.println("\ngana el jugador 2");
-		}
-		else
-		{
-			if(turno == 1)
-			{
-				System.out.println("\ngana el jugador 2");
-			}
-			else if (turno == 2)
-			{
-				System.out.println("\ngana el jugador 1");
-			}
-		}
-		
-		System.out.println("final del juego");
-		
-	*/
-
 
 }
