@@ -30,7 +30,7 @@ public class Main extends Application {
 
 		scene.setOnKeyPressed(e -> {
 			if (controller.getBandera() >= 2) {
-				mainView.limpiarTablero(0, 0, 56, 5); // limpio la parte superior del tablero
+				mainView.limpiarTablero(0, 0, 56, 6); // limpio la parte superior del tablero
 				mainView.drawText("FIN DEL JUEGO", 0, 1);
 				mainView.drawText("PRESIONE ENTER PARA JUGAR DE NUEVO", 0, 2);
 				mainView.drawText("Puntaje del jugador 1 = " + controller.getJugador().calcularPuntaje(), 0, 3);
@@ -77,16 +77,16 @@ public class Main extends Application {
 
 	public void drawScreen(Mesa mesa, ControladorMesa controller, MainView mainView) {
 		mainView.drawHand(controller.getJugador());
+		mainView.drawMachineHand(controller.getMaquina());
 		mainView.drawText("Turno del jugador " + controller.getTurno(), 0, 3);
+		if(controller.getBanderaNoPuedeJugar2() == true) {
+			mainView.drawText("El jugador 2 no puede jugar", 0, 4);
+		}
+		if(controller.getBanderaNoPuedeJugar1() == true) {
+			mainView.drawText("El jugador 1 no puede jugar", 0, 5);
+		}
 		mainView.drawTable(mesa);
 
-	}
-
-	public void drawEnd(Mesa mesa, ControladorMesa controller, MainView mainView) {
-		System.out.println("flag: " + controller.getBandera());
-		if (controller.getBandera() >= 2) {
-			mainView.drawText("FIN DEL JUEGO", 0, 1);
-		}
 	}
 
 	public void inicializar(Mesa mesa, ControladorMesa controller, MainView mainView) {

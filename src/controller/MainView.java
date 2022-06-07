@@ -29,6 +29,22 @@ public class MainView extends VBox {
 														// los dos para que se una escala cuadrada.
 
 	}
+	
+	public void drawMachineHand (Jugador jugador2) {
+		
+		for (int i = 0; i < jugador2.getFichas().size(); i++) {
+
+			// parte de arriba
+
+			drawFicha(0, calcularMitad(jugador2.getFichas().size()) + i,
+					3, 1, 1, g);
+
+			// parte abajo
+			drawFicha(0, calcularMitad(jugador2.getFichas().size()) + i,
+					4, 1, 1, g);
+		}
+		
+	}
 
 	public void drawHand(Jugador jugador1) {
 
@@ -77,7 +93,7 @@ public class MainView extends VBox {
 	}
 
 	public void drawText(String text, double x, double y) {
-		g.setFill(Color.DARKRED);
+		g.setFill(Color.BLACK);
 		g.fillText(text, x, y);
 	}
 

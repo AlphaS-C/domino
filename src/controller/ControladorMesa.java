@@ -12,6 +12,8 @@ public class ControladorMesa {
 	private int bandera = 0;
 	private int indice;
 	private int turno = 2;
+	private boolean banderaNoPuedeJugar2 = false;
+	private boolean banderaNoPuedeJugar1 = false;
 
 	public void inicializar(Mesa mesa) {
 		this.jugador1 = new Jugador(mesa);
@@ -54,7 +56,7 @@ public class ControladorMesa {
 
 			if (jugador2.puedePoner()) {
 				indice = jugador2.sacarMasOptima();
-
+				this.banderaNoPuedeJugar2 = false;
 				System.out.println("\nel jugador 2 pone " + jugador2.fichas.get(indice).imprimirFicha());
 				jugador2.ponerFicha(indice, jugador2.posicionesPosibles(indice).charAt(0));
 				turno = 1;
@@ -63,6 +65,7 @@ public class ControladorMesa {
 			} else {
 				bandera += 1;
 				System.out.println("\nno puede poner ficha jugador 2");
+				this.banderaNoPuedeJugar2 = true;
 				turno = 1;
 			}
 
@@ -83,12 +86,14 @@ public class ControladorMesa {
 					jugador1.imprimirFichas();
 					mesa.imprimirMesa();
 					bandera = 0;
+					this.banderaNoPuedeJugar1 = false;
 				} else {
 					System.out.println("Movimiento no valido, intente de nuevo");
 				}
 			} else {
 				bandera += 1;
 				System.out.println("\nno puede poner ficha jugador 1");
+				this.banderaNoPuedeJugar1 = true;
 				turno = 2;
 			}
 		}
@@ -132,4 +137,11 @@ public class ControladorMesa {
 		this.bandera = i;
 	}
 
+	public boolean getBanderaNoPuedeJugar2() {
+		return this.banderaNoPuedeJugar2;
+	}
+	
+	public boolean getBanderaNoPuedeJugar1() {
+		return this.banderaNoPuedeJugar1;
+	}
 }
